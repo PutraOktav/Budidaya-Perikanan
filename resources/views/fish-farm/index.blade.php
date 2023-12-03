@@ -1,0 +1,34 @@
+{{-- Menu input kebutuhan perikanan --}}
+@extends('layouts.admin')
+
+@section('title', 'Kalkulator')
+
+@section('main-content')
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Kebutuhan Perikanan') }}</h1>
+    <div class="container">
+        <br>
+        <p><strong>Waktu terakhir dari perubahan data pada tabel Ikan: {{ $fishTypesUpdated }}</strong> </p>
+        <p><strong>Waktu terakhir dari perubahan data pada tabel Pakan: {{ $fishFoodUpdated }}</strong> </p>
+        <form action="{{ route('fish-farm.calculate') }}" method="POST">
+            @csrf
+
+            <div class="form-group">
+                <label for="area">Luas Kolam (m<sup>2</sup>)</label>
+                <input type="number" class="form-control" id="area" name="area" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fish_type">Jenis Ikan</label>
+                <select class="form-control" id="fish_type" name="fish_type">
+                    @foreach($fishTypes as $fishType)
+                        <option value="{{ $fishType->id }}">{{ $fishType->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            
+
+            <button type="submit" class="btn btn-primary">Hitung</button>
+        </form>
+    </div>
+@endsection
